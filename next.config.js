@@ -9,7 +9,6 @@ const nextConfig = {
     domains: ["i.scdn.co"],
   },
   compiler: { styledComponents: true },
-  images: { unoptimized: true },
 };
 
 module.exports = nextConfig;
