@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST={"_app.tsx -> react-tsparticles":{id:544,files:["static/chunks/544.921b07042e664d3d.js"]}};
