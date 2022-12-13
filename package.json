@@ -8,9 +8,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "engines": {
-    "node": "v16.17.0"
-  },
   "dependencies": {
     "@fontsource/rubik": "^4.5.13",
     "@types/node": "18.11.13",
