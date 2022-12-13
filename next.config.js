@@ -2,7 +2,6 @@
 
 const nextConfig = {
   distDir: "dist",
-  assetPrefix: "./",
   reactStrictMode: true,
   swcMinify: true,
   images: {
