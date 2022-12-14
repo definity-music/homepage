@@ -8,6 +8,7 @@ import { playlistUrls } from "../playlistUrls";
 import { MdMenu, MdClose } from "react-icons/md";
 import { useMediaQuery } from "../utils/hooks/useMediaQuery";
 import NextLink from "next/link";
+import { slugify } from "../utils/helpers/slugify";
 
 const Wrapper = styled.header`
   height: 100px;
@@ -66,7 +67,11 @@ const MenuIcon = styled.div``;
 const URLs = () => (
   <>
     {playlistUrls.map((playlist, idx) => (
-      <Link key={playlist.name + idx} href={playlist.url} target="_blank">
+      <Link
+        key={playlist.name + idx}
+        href={"/track-redirect/" + slugify(playlist.name)}
+        target="_blank"
+      >
         {playlist.name}
       </Link>
     ))}
