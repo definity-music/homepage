@@ -1,13 +1,9 @@
-import {
-  GetStaticPathsContext,
-  GetStaticPathsResult,
-  GetStaticProps,
-  GetStaticPropsContext,
-} from "next";
-import { redirect } from "next/dist/server/api-utils";
+import { GetStaticPathsResult, GetStaticPropsContext } from "next";
+
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { event, ga } from "react-ga";
+import GA from "react-ga4";
+import { useConsentContext } from "../../contexts/ConsentContext";
 import { playlistUrls } from "../../playlistUrls";
 import { slugify } from "../../utils/helpers/slugify";
 
@@ -35,15 +31,22 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 
 export default function TrackRedirect({ slug, url }: Props) {
   const router = useRouter();
+  const { initializedGA, initGA } = useConsentContext();
 
   useEffect(() => {
-    event({
+    if (!initializedGA) {
+      initGA();
+      console.info("initGA");
+    }
+    console.info("track event");
+    GA.event({
       category: "Conversion",
       action: "Spotify Redirect",
       label: slug,
       value: 1,
     });
+
     console.info("redirect to" + url);
     router.push(url);
-  }, []);
+  }, [initializedGA]);
 }

@@ -18,6 +18,7 @@ export const GlobalStyle = createGlobalStyle`
     color:#fff;
     min-height: 80vh;
  }
+ * {box-sizing:border-box}
 `;
 
 export const Main = styled.main`
@@ -63,8 +64,25 @@ export const ResponsiveImage: FC<ImageProps> = (props) => {
   );
 };
 
-export const Text = styled.p`
-  font-size: 18px;
+export const Text = styled.p<{ size?: "s" | "m" | "l" }>`
+  ${({ size = "m" }) => {
+    switch (size) {
+      case "s":
+        return css`
+          font-size: 14px;
+        `;
+
+      case "l":
+        return css`
+          font-size: 22px;
+        `;
+
+      default:
+        return css`
+          font-size: 18px;
+        `;
+    }
+  }}
   line-height: 1.3;
 `;
 
@@ -107,4 +125,24 @@ export const Link = styled(NextLink)`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+export const Button = styled.button`
+  text-decoration: none;
+  font-weight: 700;
+  background: #e29a00;
+  border-radius: 5px;
+  border: none;
+  padding: 1rem 1.5rem;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+export const Flex = styled.div`
+  display: flex;
+  gap: 1rem;
 `;

@@ -1,4 +1,4 @@
-import type { AppProps } from "next/app";
+import type { AppContext, AppProps } from "next/app";
 
 import { GlobalStyle, Main } from "../components/Utils";
 import "@fontsource/rubik";
@@ -9,28 +9,27 @@ import { Footer } from "../components/Footer";
 import { loadStarsPreset } from "tsparticles-preset-stars";
 import dynamic from "next/dynamic";
 import { Header } from "../components/Header";
-import { browserWrapper } from "../utils/helpers/browserWrapper";
-import { pageview, initialize } from "react-ga";
+import GA from "react-ga4";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import Script from "next/script";
-
-const TRACKING_ID = "G-8DMLZVERLT"; // OUR_TRACKING_ID
+import { CookiesProvider, useCookies } from "react-cookie";
+import { ConsentProvider } from "../contexts/ConsentContext";
 
 const Particles = dynamic(() => import("react-tsparticles"), { ssr: false });
+const ConsentBanner = dynamic(
+  () => import("../components/ConsentBanner").then((mod) => mod.ConsentBanner),
+  { ssr: false }
+);
 
 export default function App({
   Component,
   pageProps,
 }: AppProps & { playlists: SpotifyOEmbedResult[] }) {
   const router = useRouter();
-  useEffect(() => {
-    initialize(TRACKING_ID);
-  }, []);
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
-      pageview(url);
+      GA.send({ hitType: "pageview", page: url });
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);
@@ -41,27 +40,36 @@ export default function App({
   }, [router.events]);
 
   if (router.route.includes("/redirect/")) {
-    return <Component {...pageProps}></Component>;
+    return (
+      <CookiesProvider>
+        <ConsentProvider>
+          <Component {...pageProps}></Component>
+        </ConsentProvider>
+      </CookiesProvider>
+    );
   }
 
   return (
-    <>
-      <Particles
-        options={{
-          preset: "stars",
-          background: { color: "#252525" },
-          particles: { move: { speed: 0.6 } },
-        }}
-        init={async (engine) => {
-          await loadStarsPreset(engine);
-        }}
-      />
-      <GlobalStyle />
-      <Header />
-      <Main>
-        <Component {...pageProps} />
-      </Main>
-      <Footer />
-    </>
+    <CookiesProvider>
+      <ConsentProvider>
+        <Particles
+          options={{
+            preset: "stars",
+            background: { color: "#252525" },
+            particles: { move: { speed: 0.6 } },
+          }}
+          init={async (engine) => {
+            await loadStarsPreset(engine);
+          }}
+        />
+        <GlobalStyle />
+        <Header />
+        <Main>
+          <Component {...pageProps} />
+        </Main>
+        <Footer />
+        <ConsentBanner />
+      </ConsentProvider>
+    </CookiesProvider>
   );
 }
