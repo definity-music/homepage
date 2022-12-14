@@ -40,9 +40,10 @@ export default function App({
     };
   }, [router.events]);
 
-  if (router.route.includes("track-redirect")) {
+  if (router.route.includes("/redirect/")) {
     return <Component {...pageProps}></Component>;
   }
+
   return (
     <>
       <Particles
