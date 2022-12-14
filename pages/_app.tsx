@@ -17,8 +17,6 @@ import Script from "next/script";
 
 const TRACKING_ID = "G-8DMLZVERLT"; // OUR_TRACKING_ID
 
-const { isBrowser } = browserWrapper;
-
 const Particles = dynamic(() => import("react-tsparticles"), { ssr: false });
 
 export default function App({
@@ -47,19 +45,6 @@ export default function App({
   }
   return (
     <>
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-8DMLZVERLT');
-        `}
-      </Script>
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-8DMLZVERLT"
-        async
-      />
       <Particles
         options={{
           preset: "stars",

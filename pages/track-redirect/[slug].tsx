@@ -7,9 +7,9 @@ import {
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { event, ga } from "react-ga";
 import { playlistUrls } from "../../playlistUrls";
 import { slugify } from "../../utils/helpers/slugify";
-import { useAnalyticsEventTracker } from "../../utils/hooks/useAnalyticsEventTracker";
 
 type Props = { slug: string; url: string };
 
@@ -35,9 +35,14 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 
 export default function TrackRedirect({ slug, url }: Props) {
   const router = useRouter();
-  const ga = useAnalyticsEventTracker(slug);
+
   useEffect(() => {
-    ga("redirect", "spotify");
+    event({
+      category: "Conversion",
+      action: "Spotify Redirect",
+      label: slug,
+      value: 1,
+    });
     router.push(url);
-  });
+  }, []);
 }
