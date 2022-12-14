@@ -1,8 +1,22 @@
+import Head from "next/head";
 import { Container, Headline, Text } from "../../components/Utils";
 
 export default function Imprint({}) {
   return (
     <Container>
+      <Head>
+        <title>definity music - Imprint</title>
+        <meta
+          name="description"
+          content="definity music is a electronic music label and spotify playlist curator, who wants to relase the best music in the future."
+        />
+
+        <meta
+          name="keywords"
+          content="electronic music, dance music, edm music, deep house, slap house, house music, spotify playlist, music label, playlist curator"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Headline>Imprint</Headline>
       <Text>Service provider according to §5 TMG</Text>
       <Text>
