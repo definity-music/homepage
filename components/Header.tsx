@@ -71,7 +71,7 @@ const URLs = () => (
     {playlistUrls.map((playlist, idx) => (
       <Link
         key={playlist.name + idx}
-        href={"/track-redirect/" + slugify(playlist.name)}
+        href={"/redirect/" + slugify(playlist.name)}
         target="_blank"
       >
         {playlist.name}
