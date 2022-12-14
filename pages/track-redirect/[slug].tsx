@@ -43,6 +43,7 @@ export default function TrackRedirect({ slug, url }: Props) {
       label: slug,
       value: 1,
     });
+    console.info("redirect to" + url);
     router.push(url);
   }, []);
 }
