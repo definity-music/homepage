@@ -25,12 +25,14 @@ const Padding = styled.div`
   padding: 0 2rem;
   display: flex;
   width: 100%;
+  align-items: center;
 `;
 
 const DesktopMenu = styled.div<{ isHidden?: boolean }>`
   flex: 1;
   justify-content: flex-end;
   gap: 25px;
+  text-shadow: 2px 2px 8px #252525;
   display: ${({ isHidden }) => (isHidden ? "none" : "flex")};
 `;
 
